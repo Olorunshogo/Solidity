@@ -17,3 +17,39 @@ The projects are built and tested using modern Ethereum development frameworks a
 - Practical experience with **deployment, compilation, and project structuring**
 
 This repository is intended as both a learning sandbox and a professional portfolio, showcasing hands-on experience with building, testing, and maintaining Ethereum smart contracts.
+
+
+## Useful commands
+git rm --cached **/package-lock.json
+git rm --cached $(git ls-files | grep package-lock.json)
+
+rm -rf node_modules
+rm -f package-lock.json
+
+rm -rf */node_modules
+rm -rf */package-lock.json
+rm -rf pnpm-lock.yaml
+rm -rf */artifacts
+rm -rf */cache
+
+<!-- Run Everything -->
+pnpm compile
+pnpm clean
+pnpm test
+
+<!-- Or single project -->
+1. **Todo:** pnpm --filter **todo** **compile**/**clean**/**test**
+
+2. **Escrow:** pnpm --filter **escrow** **compile**/**clean**/**test**
+
+3. **Standard Escrow** pnpm --filter **standard-escrow** **compile**/**clean**/**test**
+
+4. **Transaction Savings:** pnpm --filter **transaction-savings** **compile**/**clean**/**test**
+
+5. **CrowdFunding:** pnpm --filter **crowd-funding** **compile**/**clean**/**test**
+
+6. **Auction:** pnpm --filter **auction** **compile**/**clean**/**test**
+
+
+
+
