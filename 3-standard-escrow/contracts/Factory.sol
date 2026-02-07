@@ -1,21 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
-import './Standard.sol';
 
+import './StandardEscrow.sol';
 
-// Factory contract responsible for creating and tracking escrow contracts
 contract EscrowFactory {
 
-    address public immutable arbiter;
     uint256 public escrowCount;
 
     mapping(uint256 => address) public escrows;
 
     event EscrowCreated(uint256 indexed id, address escrow);
-
-    constructor(address _arbiter) {
-        arbiter = _arbiter;
-    }
 
     function createEscrow(
       address freelancer,
@@ -26,7 +20,6 @@ contract EscrowFactory {
       StandardEscrow escrow = new StandardEscrow{value: msg.value}(
           msg.sender,
           freelancer,
-          arbiter,
           totalMilestones,
           milestoneAmount,
           approvalTimeout

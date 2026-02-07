@@ -61,3 +61,23 @@ npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
 git rm --cached **/package-lock.json
 git rm --cached $(git ls-files | grep package-lock.json)
 
+rm -rf node_modules
+rm -f package-lock.json
+
+rm -rf */node_modules
+rm -rf */package-lock.json
+rm -rf pnpm-lock.yaml
+rm -rf */artifacts
+rm -rf */cache
+
+<!-- Run Everything -->
+pnpm compile
+pnpm clean
+pnpm test
+
+<!-- Or single project -->
+pnpm --filter todo compile
+pnpm --filter escrow test
+
+
+

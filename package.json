@@ -1,45 +1,28 @@
 {
   "name": "solidity",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "check": "npm run format && npm run lint",
-    "sol-1": "cd ./1-todo && npx hardhat compile",
-    "sol-2": "cd ./2-escrow && npx hardhat compile",
-    "sol-3": "cd ./3-standard-escrow && npx hardhat compile",
-    "sol-4": "cd ./4-transaction-savings && npx hardhat compile",
-    "sol-5": "cd ./5-crowd-funding && npx hardhat compile",
-    "sol-6": "cd ./6-auction && npx hardhat compile",
-    "clean": "cd ./1-todo && npx hardhat clean && cd ./2-escrow && npx hardhat clean && cd ./3-standard-escrow && npx hardhat clean && cd ./4-transaction-savings && npx hardhat clean && cd ./5-crowd-funding && npx hardhat clean && cd ./6-auction && npx hardhat clean",
-    "clear": "npx hardhat clean --prefix ./1-todo && npx hardhat clean --prefix ./2-escrow && npx hardhat clean --prefix ./3-standard-escrow && npx hardhat clean --prefix ./4-transaction-savings && npx hardhat clean --prefix ./5-crowd-funding && npx hardhat clean --prefix ./6-auction"
+
+    "compile": "pnpm -r run compile",
+    "clean": "pnpm -r run clean",
+    "test": "pnpm -r run test"
   },
-  "keywords": [
-    "Solidity",
-    "Projects"
-  ],
-  "author": "Olorunshogo Moses BAMTEFA",
-  "license": "MIT",
-  "type": "module",
   "devDependencies": {
+    "hardhat": "^3.1.7",
     "@nomicfoundation/hardhat-ethers": "^4.0.4",
     "@nomicfoundation/hardhat-ignition": "^3.0.7",
     "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.2",
-    "@types/chai": "^4.3.20",
-    "@types/chai-as-promised": "^8.0.2",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^22.19.9",
-    "chai": "^5.3.3",
+
     "ethers": "^6.16.0",
-    "forge-std": "github:foundry-rs/forge-std#v1.9.4",
-    "hardhat": "^3.1.7",
+    "chai": "^5.3.3",
     "mocha": "^11.7.5",
+    "typescript": "~5.8.0",
+
     "prettier": "^3.8.1",
-    "prettier-plugin-solidity": "^2.2.1",
-    "typescript": "~5.8.0"
+    "prettier-plugin-solidity": "^2.2.1"
   }
 }

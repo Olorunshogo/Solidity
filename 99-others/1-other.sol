@@ -5,7 +5,6 @@ contract StandardEscrow {
 
   address public immutable client;
     address public immutable freelancer;
-    address public immutable arbiter;
 
     uint256 public immutable totalMilestones;
     uint256 public immutable milestoneAmount;
@@ -33,15 +32,9 @@ contract StandardEscrow {
         _;
     }
 
-    modifier onlyArbiter() {
-        require(msg.sender == arbiter, "Only arbiter");
-        _;
-    }
-
   constructor(
         address _client,
         address _freelancer,
-        address _arbiter,
         uint256 _totalMilestones,
         uint256 _milestoneAmount,
         uint256 _approvalTimeout
@@ -50,7 +43,6 @@ contract StandardEscrow {
 
         client = _client;
         freelancer = _freelancer;
-        arbiter = _arbiter;
         totalMilestones = _totalMilestones;
         milestoneAmount = _milestoneAmount;
         approvalTimeout = _approvalTimeout;
@@ -116,5 +108,8 @@ contract StandardEscrow {
         status = Status.COMPLETE;
     }
 
-       
+
 }
+
+
+

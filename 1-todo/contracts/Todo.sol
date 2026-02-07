@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.26;
+pragma solidity ^0.8.28;
 
 contract Add{
   function add(uint a, uint b) public pure returns(uint) {
@@ -57,7 +57,7 @@ contract Todo {
     return todoCounter;
   }
 
-  function updateTodo(uint _id) external {  
+  function updateTodo(uint _id) external {
     require((_id > 0) && (_id <= todoCounter), "Invalid id");
     TodoList storage todo = todos[_id];
     require(todo.status == Status.Pending, "Not pending");
