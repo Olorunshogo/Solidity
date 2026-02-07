@@ -30,9 +30,9 @@ contract CrowdFunding {
         vaultStatus = Status.ACTIVE;
     }
 
-    // Users contribute ETH
+    // Users can use this function to contribute ETH
     function contribute() external payable {
-        require(vaultStatus == Status.ACTIVE, "Chill first, the funding is not active!");
+        require(vaultStatus == Status.ACTIVE, "I know you have money but chill first, the funding is not active!");
         require(block.timestamp < deadline, "Sorry. Deadline has passed to contribute.");
         require(msg.value > 0, "Too small. Must send ETH > 0");
 

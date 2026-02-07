@@ -1,57 +1,45 @@
-# Sample Hardhat 3 Beta Project (`mocha` and `ethers`)
+# Transaction Savings
 
-This project showcases a Hardhat 3 Beta project using `mocha` for tests and the `ethers` library for Ethereum interactions.
+Timelocked Savings Vault
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+Objective
+Create a Timelocked Savings Vault where users can lock ETH and only withdraw it after a specified time.
 
-## Project Overview
+Each user can have only one active vault at a time.
 
-This example project includes:
+Functional Requirements
+1. Deposit
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using `mocha` and ethers.js
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+    - User deposits ETH and specifies:
 
-## Usage
+    - unlockTime (future timestamp)
 
-### Running Tests
+    - ETH must be greater than zero
 
-To run all the tests in the project, execute the following command:
+    - Deposit locks the vault
 
-```shell
-npx hardhat test
-```
+2. Withdrawal
 
-You can also selectively run the Solidity or `mocha` tests:
+    - User can withdraw only after block.timestamp >= unlockTime
 
-```shell
-npx hardhat test solidity
-npx hardhat test mocha
-```
+    - Full balance must be withdrawn at once
 
-### Make a deployment to Sepolia
+    - Vault resets after withdrawal
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
+3. Restrictions
 
-To run the deployment to a local chain:
+    - User cannot deposit again if a vault is active
 
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
+    - Contract must reject direct ETH transfers
 
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
+    - No one can withdraw another user&apos;s funds
 
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
+    - Edge Cases to Handle
 
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
+    - User sets unlock time in the past
 
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
+    - User tries to withdraw early
 
-After setting the variable, you can run the deployment with the Sepolia network:
+    - User tries to deposit twice
 
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```
+    - User withdraws twice
