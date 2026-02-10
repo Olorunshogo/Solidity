@@ -3,7 +3,7 @@ pragma solidity ^0.8.28;
 
 contract AuctionContract {
 
-uint public auctionCounter;
+    uint public auctionCounter;
 
     enum AuctionStatus{
         Pending,
@@ -29,7 +29,6 @@ uint public auctionCounter;
     event AuctionInitialaized(uint id);
 
     constructor() {
-
     }
 
     function createAuction(uint _price, uint _duration) public returns(uint){
@@ -57,53 +56,55 @@ uint public auctionCounter;
 
     function bid(uint _auctionsId) public payable {
         Auction storage auction = auctions[_auctionsId];
+
         require(msg.sender != auction.owner, "You can't bid on your own auction");
-        require(msg.value > 0, "Send Eth greater than zero");
+        require(msg.value > auction.startingPrice, "Send Eth greater than startingPrice at least.");
         require(auction.status == AuctionStatus.OnGoing, "invalid Status");
 
-        uint totalBid = refunds[_auctionsId][msg.sender] += msg.value;
-        require(totalBid > auction.highestBid, "Bid must be higher than the current bidder");
+        uint totalBid = refunds[_auctionsId][msg.sender] + msg.value;
 
-        // Clear pending returns for this bidder since we're using it
+        require(totalBid >= auction.startingPrice, "Bid below starting price");
+        require(totalBid > auction.highestBid, "Bid must be higher than current bid");
+
         refunds[_auctionsId][msg.sender] = 0;
 
-        // Refunds the previous highest bidderj
-        if (auction.highestBidder != address(0) && auction.highestBidder != auction.owner) {
+        if (auction.highestBidder != address(0)) {
             refunds[_auctionsId][auction.highestBidder] += auction.highestBid;
         }
 
-        // Update highest bid
         auction.highestBid = totalBid;
         auction.highestBidder = msg.sender;
     }
 
-    // function withdraw(uint _auctionsId) payable public {
-    //     Auction storage auction = auctions[_auctionsId];
-    //     require(msg.sender != auction.owner, "You can't bid on your own auction");
-    //     require(msg.value > 0, "Send Eth greater than zero");
-    //     require(auction.status == AuctionStatus.OnGoing, "invalid Status");
+    function endAuction(uint _auctionId) external {
+        Auction storage auction = auctions[_auctionId];
 
-    //     uint totalBid = refunds[_auctionsId][msg.sender] += msg.value;
-    //     require(totalBid > auction.highestBid, "Bid must be higher than the current bidder");
+        require(auction.status == AuctionStatus.OnGoing, "Auction not ongoing");
+        require(
+            block.timestamp >= auction.startTime + auction.duration,
+            "Auction not ended yet"
+        );
 
-    //     // Clear pending returns for this bidder since we're using it
-    //     refunds[_auctionsId][msg.sender] = 0;
+        auction.status = AuctionStatus.Completed;
 
-    //     // Refunds the previous highest bidder
-    //     if (auction.highestBidder != address(0) && auction.highestBidder != auction.owner) {
-    //         refunds[_auctionsId][auction.highestBidder] += auction.highestBid;
-    //     }
+        // If no bids, nothing else to do
+        if (auction.highestBidder == address(0)) {
+            return;
+        }
 
-    //     // Update highest bid
-    //     auction.highestBid = totalBid;
-    //     auction.highestBidder = msg.sender;
-    // }
-
-    function returnBalances(address person) external view returns(uint){
-        uint bal = address(person).balance;
-
-        return bal;
+        // Transfer highest bid to auction owner
+        (bool success, ) = auction.owner.call{value: auction.highestBid}("");
+        require(success, "Bid transfer failed");
     }
 
+    function refundBidders(uint _auctionId) external {
+        uint amount = refunds[_auctionId][msg.sender];
+        require(amount > 0, "No refund available");
+
+        refunds[_auctionId][msg.sender] = 0;
+
+        (bool success, ) = msg.sender.call{value: amount}("");
+        require(success, "Bid transfer failed");
+    }
 }
 
