@@ -1,7 +1,0 @@
-packages:
-  - "1-todo"
-  - "2-escrow"
-  - "3-standard-escrow"
-  - "4-transaction-savings"
-  - "5-crowd-funding"
-  - "6-auction"

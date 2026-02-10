@@ -51,5 +51,14 @@ pnpm test
 6. **Auction:** pnpm --filter **auction** **compile**/**clean**/**test**
 
 
+pnpm turbo run test --filter=auction
+
+pnpm turbo run compile --filter=escrow
+
+pnpm turbo run test --filter=./6-auction
+pnpm turbo run test --filter=@solidity/auction
+
+
+
 
 
