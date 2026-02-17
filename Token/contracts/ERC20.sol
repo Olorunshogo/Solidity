@@ -4,7 +4,7 @@ pragma solidity ^0.8.28;
 contract ERC20 {
   string public name;
   string public symbol;
-  string public decimals;
+  uint8 public decimals;
 
   uint private _totalSupply;
 
@@ -17,12 +17,15 @@ contract ERC20 {
   constructor(
     string memory _name,
     string memory _symbol,
-    string memory _decimals
+    uint8 _decimals,
+    uint initialSupply
   ) {
     name = _name;
     symbol = _symbol;
     decimals = _decimals;
+
     // Mint tokens to contract creator
+    _mint(msg.sender, initialSupply);
   }
 
   // Total Supply
@@ -41,7 +44,7 @@ contract ERC20 {
   }
 
   // Transfer
-  function transfer(address from, address to, uint amount) internal {
+  function _transfer(address from, address to, uint amount) internal {
     // Verify that it's not address zero calling
     require(to != address(0), "Transfer to zero address");
 
@@ -52,6 +55,69 @@ contract ERC20 {
       _balances[from] = senderBalance - amount;
       _balances[to] += amount;
     }
+
+    emit Transfer(from, to, amount);
   }
+
+  //   Mint
+  function _mint(address account, uint amount) internal {
+
+    // Verify that it's not address zero calling
+    require(account != address(0), "Cannot mint to zero address");
+
+    _totalSupply += amount;
+    _balances[account] += amount;
+
+    emit Transfer(address(0), account, amount);
+  }
+
+  // Burn
+  function _burn(uint amount) internal {
+    require(_balances[msg.sender] >= amount, "Insufficient funds");
+    require(msg.sender != address(0), "Cannot call from address 0");
+
+    _totalSupply -= amount;
+    _balances[msg.sender] -= amount;
+    _balances[address(0)] += amount;
+
+    emit Transfer(msg.sender, address(0), amount);
+  }
+
+  // Approve
+  function approve(address spender, uint amount) external returns (bool) {
+    // State changing functions should always be returning a boolean. That return is used to check if the operation is successful or not.abi
+    // Any external function that calls an internal will now be the one that returns it
+    require(spender != address(0), "Cannot approve to zero address");
+
+    _allowances[msg.sender][spender] = amount;
+
+    emit Approval(msg.sender, spender, amount);
+    return true;
+  }
+
+  // transferFrom: Helps others to spend from your own account
+  function transferFrom(address from, address to, uint amount) external returns (bool) {
+    uint256 currentAllowance = _allowances[from][msg.sender];
+    require(currentAllowance >= amount, "Insufficient allowance");
+
+    _allowances[from][msg.sender] = currentAllowance - amount;
+
+    emit Approval(from, msg.sender, _allowances[from][msg.sender]);
+    _transfer(from, to, amount);
+    return true;
+  }
+
+  // transfer() public function
+  function transfer(address to, uint amount) external returns (bool) {
+    _transfer(msg.sender, to, amount);
+    return true;
+  }
+
+  // mint() public function
+  function mint(uint256 amount) external returns (bool) {
+    _mint(msg.sender, amount);
+    return true;
+  }
+
 
 }
