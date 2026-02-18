@@ -1,3 +1,6 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
 root = true
 
 [*]
@@ -9,7 +12,7 @@ indent_style = space
 indent_size = 2
 
 [*.sol]
-indent_size = 4
-
+indent_size = 2
 [*.md]
-trim_trailing_whitespace = false
+trim_trailing_whitespace = true
+
