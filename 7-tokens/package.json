@@ -8,7 +8,10 @@
     "keystore:etherscan": "pnpm hardhat keystore set ETHERSCAN_API_KEY --force",
     "erc20-deploy:sepolia": "hardhat --show-stack-traces ignition deploy ignition/modules/ERC20.ts --network sepolia",
     "erc20-deploy:local": "hardhat ignition deploy ignition/modules/ERC20.ts",
-    "erc20-verify": "pnpm hardhat verify --network sepolia 0x2e68bB0A4583c89a4c304Ab99debCd01EE51Ff12 'LONER' 'BOM' 6 2000000000"
+    "erc20-verify": "pnpm hardhat verify --network sepolia 0x2e68bB0A4583c89a4c304Ab99debCd01EE51Ff12 'LONER' 'BOM' 6 2000000000",
+    "erc721-deploy:sepolia": "hardhat ignition deploy ignition/modules/ERC721.ts --network sepolia",
+    "erc721-deploy:local": "hardhat ignition deploy ignition/modules/ERC721.ts",
+    "erc721-verify": "pnpm hardhat verify --network sepolia 0x2e68bB0A4583c89a4c304Ab99debCd01EE51Ff12 'LONER' 'BOM' 6 2000000000"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^4.0.4",

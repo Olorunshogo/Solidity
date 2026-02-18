@@ -59,7 +59,7 @@ contract ERC721 is IERC721Metadata {
     _baseURI = baseURI_;
   }
 
-  function supportInterface(bytes4 interfaceId) external pure returns (bool) {
+  function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
     return interfaceId == 0x01ffc9a7 || // IERC 165
         interfaceId == 0x80ac58cd || // IERC721
         interfaceId == 0x5b5e139f; // IERC721Metadata
