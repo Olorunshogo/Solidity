@@ -11,7 +11,7 @@
     "erc20-verify": "pnpm hardhat verify --network sepolia 0x2e68bB0A4583c89a4c304Ab99debCd01EE51Ff12 'LONER' 'BOM' 6 2000000000",
     "erc721-deploy:sepolia": "hardhat ignition deploy ignition/modules/ERC721.ts --network sepolia",
     "erc721-deploy:local": "hardhat ignition deploy ignition/modules/ERC721.ts",
-    "erc721-verify": "pnpm hardhat verify --network sepolia 0x2e68bB0A4583c89a4c304Ab99debCd01EE51Ff12 'LONER' 'BOM' 6 2000000000"
+    "erc721-verify": "pnpm hardhat verify --network sepolia 0x2e68bB0A4583c89a4c304Ab99debCd01EE51Ff12 'BOMTOKEN' 'BMT' '/' "
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^4.0.4",
