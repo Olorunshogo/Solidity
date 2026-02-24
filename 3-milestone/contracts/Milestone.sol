@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-contract StandardEscrow {
+contract Milestone {
 
     address public immutable client;
     address public immutable freelancer;
@@ -78,7 +78,7 @@ contract StandardEscrow {
         require(releasedMilestones < completedMilestones, "Nothing to release");
 
         releasedMilestones++;
-        
+
         (bool ok, ) = freelancer.call{value: milestoneAmount}("");
         require(ok, "ETH transfer failed");
 

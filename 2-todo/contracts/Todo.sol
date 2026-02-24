@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-contract Add{
-  function add(uint a, uint b) public pure returns(uint) {
+contract Add {
+  function add(uint a, uint b) public pure returns (uint) {
     uint c = a + b;
     return c;
   }
 }
 
 contract Average is Add {
-  function average(uint a, uint b) public pure returns(uint) {
-    uint d = add(a,b) / 2;
+  function average(uint a, uint b) public pure returns (uint) {
+    uint d = add(a, b) / 2;
 
     return d;
   }
@@ -39,18 +39,18 @@ contract Todo {
   event TodoCreated(string text, uint deadline);
   event TodoUpdated(uint256 id, Status status);
 
-  function createTodo(string memory text, uint deadline) external returns(uint) {
+  function createTodo(string memory text, uint deadline) external returns (uint) {
     require(bytes(text).length > 0, "Empty text");
     require(deadline > block.timestamp + 600, "Invalid deadline");
 
     todoCounter++;
 
     todos[todoCounter] = TodoList({
-        id: todoCounter,
-        owner: msg.sender,
-        text: text,
-        status: Status.Pending,
-        deadline: deadline
+      id: todoCounter,
+      owner: msg.sender,
+      text: text,
+      status: Status.Pending,
+      deadline: deadline
     });
 
     emit TodoCreated(text, deadline);
@@ -63,11 +63,10 @@ contract Todo {
     require(todo.status == Status.Pending, "Not pending");
     require(msg.sender == todo.owner, "Unauthorized Caller");
 
-    if(block.timestamp > todo.deadline){
+    if (block.timestamp > todo.deadline) {
       todo.status = Status.Defaulted;
     } else {
       todo.status = Status.Done;
     }
   }
-
 }

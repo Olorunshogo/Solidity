@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-import './StandardEscrow.sol';
+import "./Milestone.sol";
 
-contract EscrowFactory {
+contract MilestoneFactory {
 
     uint256 public escrowCount;
 
@@ -17,7 +17,7 @@ contract EscrowFactory {
       uint256 milestoneAmount,
       uint256 approvalTimeout
     ) external payable returns (address) {
-      StandardEscrow escrow = new StandardEscrow{value: msg.value}(
+      Milestone escrow = new Milestone{value: msg.value}(
           msg.sender,
           freelancer,
           totalMilestones,

@@ -15,7 +15,7 @@ describe("Counter Contract Suite", async () => {
   describe("Deployment", () => {
     it("Should return default storage value", async () => {
       // Call our deploy util function
-      const deployedContract: Contract = await deployContract("Counter");
+      const deployedContract: Contract = await deployContract("CounterV1");
       console.log("Deployed contract is: ", deployedContract);
 
       // Assert that default storage value of x is 0
@@ -27,7 +27,7 @@ describe("Counter Contract Suite", async () => {
   // Transactions should capture state changing variable
   describe("Transactions", () => {
     it("Should increase x value by 1", async () => {
-      const deployedContract: Contract = await deployContract("Counter");
+      const deployedContract: Contract = await deployContract("CounterV1");
       // console.log("Deployed counter is: ", deployedCounter);
 
       const count1 = await deployedContract.x();
@@ -41,7 +41,7 @@ describe("Counter Contract Suite", async () => {
     });
 
     it("Should increase x value when inc() is called multiple times", async () => {
-      const deployedContract: Contract = await deployContract("Counter");
+      const deployedContract: Contract = await deployContract("CounterV1");
       // console.log("Deployed counter is: ", deployedCounter);
 
       const count1 = await deployedContract.x();
@@ -66,20 +66,18 @@ describe("Counter Contract Suite", async () => {
   describe("Inc by functions", () => {
 
     it("Revert if anything <= 0 is used in the incBy", async () => {
-      const deployedCounter: Contract = await deployContract("Counter");
-      await expect(deployedCounter.incBy(0)).to.be.revertedWith("Don't use any number <= 0.");
+      const deployedCounter: Contract = await deployContract("CounterV1");
+      await expect(deployedCounter.incBy(0)).to.be.revertedWith("incBy: increment should be positive");
     });
 
     it("Check if the function increases by its given parameters", async () => {
-      const deployedCounter: Contract = await deployContract("Counter");
+      const deployedCounter: Contract = await deployContract("CounterV1");
 
       expect(await deployedCounter.x()).to.eq(0);
-
       const initialInc = await deployedCounter.x();
       console.log("Initial increment is: ", initialInc)
 
       await deployedCounter.incBy(2);
-
       const secondInc = await deployedCounter.x();
       console.log("Secound increment is: ", secondInc);
 
@@ -87,20 +85,19 @@ describe("Counter Contract Suite", async () => {
     });
 
     it("Should increase x multiple times", async () => {
-      const deployedContract: Contract = await deployContract("Counter");
+      const deployedContract: Contract = await deployContract("CounterV1");
       const initialInc = await deployedContract.x();
       console.log();
 
       await deployedContract.incBy(2);
       const secondInc = await deployedContract.x();
-      expect(initialInc).to.eq(initialInc + 2n);
+      expect(secondInc).to.eq(initialInc + 2n);
 
       await deployedContract.incBy(3);
       const thirdInc = await deployedContract.x();
-      expect(secondInc).to.eq(secondInc + 3n);
+      expect(thirdInc).to.eq(secondInc + 3n);
     });
 
   });
-
 })
 

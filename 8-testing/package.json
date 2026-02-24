@@ -1,11 +1,14 @@
 {
-  "name": "8-testing",
+  "name": "testing",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "compile": "npx hardhat compile",
-    "test-counter": "npx hardhat test test/Counter.ts",
-    "test-counter2": "npx hardhat test test/Counter-test.ts"
+    "compile-v1": "npx hardhat compile contracts/CounterV1.sol",
+    "compile-v2": "npx hardhat compile contracts/CounterV2.sol",
+    "compile-v3": "npx hardhat compile contracts/CounterV3.sol",
+    "test-v1": "npx hardhat test test/Counter-test1.ts",
+    "test-v2": "npx hardhat test test/Counter-test2.ts",
+    "test-v3": "npx hardhat test test/Counter-test3.ts"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^4.0.4",
@@ -21,5 +24,8 @@
     "hardhat": "^3.1.9",
     "mocha": "^11.7.5",
     "typescript": "~5.8.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.4.0"
   }
 }
