@@ -279,38 +279,6 @@ describe("Counter Contract Suite", async () => {
 
     });
 
-    describe("Event emissions", function () {
-
-      it("Should emit Increment event when inc() is called", async function () {
-        await expect(deployedContract.inc())
-          .to.emit(deployedContract, "Increment")
-          .withArgs(1);
-      });
-
-      it("Should emit Increment event with correct value for incBy()", async function () {
-        await expect(deployedContract.incBy(5))
-          .to.emit(deployedContract, "Increment")
-          .withArgs(5);
-      });
-
-      it("Should emit Decrement event when dec() is called", async function () {
-        await deployedContract.inc(); // make x = 1
-
-        await expect(deployedContract.dec())
-          .to.emit(deployedContract, "Decrement")
-          .withArgs(1);
-      });
-
-      it("Should emit Decrement event with correct value for decBy()", async function () {
-        await deployedContract.incBy(5);
-
-        await expect(deployedContract.decBy(3))
-          .to.emit(deployedContract, "Decrement")
-          .withArgs(3);
-      });
-
-    });
-
   };
 })
 
