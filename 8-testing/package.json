@@ -6,9 +6,13 @@
     "compile-v1": "npx hardhat compile contracts/CounterV1.sol",
     "compile-v2": "npx hardhat compile contracts/CounterV2.sol",
     "compile-v3": "npx hardhat compile contracts/CounterV3.sol",
+    "compile-timelockv1": "npx hardhat compile contracts/Timelock.sol",
     "test-v1": "npx hardhat test test/Counter-test1.ts",
     "test-v2": "npx hardhat test test/Counter-test2.ts",
-    "test-v3": "npx hardhat test test/Counter-test3.ts"
+    "test-v3": "npx hardhat test test/Counter-test3.ts",
+    "test-timelock": "npx hardhat test test/TimelockV1.ts",
+
+    "format": "prettier --write  \"hardhat.config.ts\"  \"test/*.ts\"   "
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^4.0.4",
